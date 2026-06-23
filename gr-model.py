@@ -36,6 +36,17 @@ if __name__ == "__main__":
 
     regions = con.execute("SELECT region FROM regional_activity").fetchall()
 
+    con.execute("""
+        CREATE TABLE IF NOT EXISTS forecasts (
+            region VARCHAR,
+            probability FLOAT,
+            magnitude_threshold FLOAT,
+            forecast_date TIMESTAMP,
+            days INTEGER
+        )
+    """)
+
+
     for region in regions:
         # extract magnitudes for the region and unpack the list of tuples into a flat list
         magnitudes = con.execute("SELECT magnitude FROM cleaned_earthquakes WHERE region = ? AND magnitude IS NOT NULL", [region[0]]).fetchall()
@@ -50,6 +61,8 @@ if __name__ == "__main__":
 
         probability = forecast_probability(a, b, magnitude_threshold=5.0, days=30)
 
-        print(f"{region[0]}: {probability:.2%} chance of M4.0+ earthquake in the next 30 days")
+        con.execute("""
+            INSERT INTO forecasts VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?)
+        """, [region[0], probability, 5.0, 30])
     
 
