@@ -1,3 +1,6 @@
 .venv
 *.duckdb
 data/raw/*
+backend/.env
+.env
+airflow/logs/
