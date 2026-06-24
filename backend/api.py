@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import duckdb
 import numpy as np
@@ -139,3 +140,6 @@ def get_forecasts(threshold: float = Query(default=5.0), days: int = Query(defau
     con.close()
     results.sort(key=lambda x: x["probability"], reverse=True)
     return results
+
+
+app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
