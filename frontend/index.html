@@ -368,7 +368,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
     const IS_LOCAL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-    const API = IS_LOCAL ? "http://127.0.0.1:8000" : "https://quake-pro-api.onrender.com";
+    const API = IS_LOCAL ? "http://127.0.0.1:8000" : "https://quake-pro.onrender.com";
 
     const map = L.map("map", { zoomControl: true }).setView([20, 0], 2);
     L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
