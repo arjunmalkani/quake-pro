@@ -1,4 +1,5 @@
 import json
+import os
 import requests
 import duckdb
 
@@ -6,7 +7,10 @@ con = duckdb.connect(database='data/earthquake_data.duckdb', read_only=False)
 
 # call api and write to json file
 def ingest_data():
-    url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_hour.geojson"
+    url = os.environ.get(
+        "USGS_FEED",
+        "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_hour.geojson"
+    )
 
     try:
         response = requests.get(url)

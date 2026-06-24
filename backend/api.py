@@ -95,7 +95,7 @@ def get_earthquakes(min_magnitude: float = Query(default=1.0)):
     """, [min_magnitude]).fetchall()
     con.close()
     return [
-        {"id": r[0], "magnitude": r[1], "place": r[2], "time": str(r[3]), "longitude": r[4], "latitude": r[5]}
+        {"id": r[0], "magnitude": round(r[1], 2), "place": r[2], "time": str(r[3]), "longitude": r[4], "latitude": r[5]}
         for r in rows
     ]
 
