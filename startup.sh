@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+mkdir -p data/raw
+
 echo "Running ingest..."
 python ingest.py
 
