@@ -7,5 +7,5 @@ services:
     envVars:
       - key: GROQ_API_KEY
         sync: false
-      - key: USGS_FEED
-        value: https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson
+      - key: MOTHERDUCK_TOKEN
+        sync: false

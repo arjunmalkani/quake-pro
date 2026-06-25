@@ -32,7 +32,7 @@ def forecast_probability(a, b, magnitude_threshold, days):
     return P
 
 if __name__ == "__main__":
-    con = duckdb.connect(database='data/earthquake_data.duckdb', read_only=False)
+    con = duckdb.connect('md:quake_pro')
 
     regions = con.execute("SELECT region FROM regional_activity").fetchall()
 
