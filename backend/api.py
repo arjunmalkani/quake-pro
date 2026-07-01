@@ -21,7 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DB_PATH = "md:quake_pro"
+DB_PATH = "../data/earthquake_data.duckdb"
 
 
 def fit_gutenberg_richter(magnitudes):
@@ -86,7 +86,7 @@ def chat(req: ChatRequest):
 
 @app.get("/earthquakes")
 def get_earthquakes(min_magnitude: float = Query(default=1.0)):
-    con = duckdb.connect(DB_PATH, read_only=False)
+    con = duckdb.connect(DB_PATH, read_only=True)
     rows = con.execute("""
         SELECT id, magnitude, place, time, longitude, latitude
         FROM cleaned_earthquakes
@@ -103,7 +103,7 @@ def get_earthquakes(min_magnitude: float = Query(default=1.0)):
 
 @app.get("/region-centroids")
 def get_region_centroids():
-    con = duckdb.connect(DB_PATH, read_only=False)
+    con = duckdb.connect(DB_PATH, read_only=True)
     rows = con.execute("""
         SELECT region, AVG(latitude) AS lat, AVG(longitude) AS lng
         FROM cleaned_earthquakes
@@ -116,7 +116,7 @@ def get_region_centroids():
 
 @app.get("/forecasts")
 def get_forecasts(threshold: float = Query(default=5.0), days: int = Query(default=30)):
-    con = duckdb.connect(DB_PATH, read_only=False)
+    con = duckdb.connect(DB_PATH, read_only=True)
     regions = con.execute("SELECT region FROM regional_activity").fetchall()
 
     results = []

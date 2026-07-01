@@ -3,7 +3,7 @@ import os
 import requests
 import duckdb
 
-con = duckdb.connect('md:quake_pro')
+con = duckdb.connect(database='data/earthquake_data.duckdb', read_only=False)
 
 # call api and write to json file
 def ingest_data():
